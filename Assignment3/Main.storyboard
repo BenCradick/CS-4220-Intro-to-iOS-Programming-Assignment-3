@@ -21,10 +21,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="P88-pF-tYl">
+                            <stackView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="P88-pF-tYl">
                                 <rect key="frame" x="16.5" y="33.5" width="342" height="600"/>
                                 <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" alignment="center" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="vIF-cH-HhJ">
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" alignment="top" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="vIF-cH-HhJ">
                                         <rect key="frame" x="0.0" y="0.0" width="342" height="170"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="juM-kf-LoQ">
@@ -156,28 +156,39 @@
                                                 </subviews>
                                             </stackView>
                                         </subviews>
+                                        <constraints>
+                                            <constraint firstItem="g6r-L9-Xjn" firstAttribute="top" secondItem="vIF-cH-HhJ" secondAttribute="top" id="hSz-lh-rJ8"/>
+                                        </constraints>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="IRp-02-FSw">
                                         <rect key="frame" x="0.0" y="170" width="342" height="30"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TFU-Yy-p4D">
+                                            <button opaque="NO" tag="-3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TFU-Yy-p4D">
                                                 <rect key="frame" x="0.0" y="0.0" width="114" height="30"/>
                                                 <state key="normal" title="Restart"/>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="x1w-TV-o1T">
+                                            <button opaque="NO" tag="-2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="x1w-TV-o1T">
                                                 <rect key="frame" x="114" y="0.0" width="114" height="30"/>
                                                 <state key="normal" title="Clear"/>
+                                                <connections>
+                                                    <action selector="clear" destination="BYZ-38-t0r" eventType="touchDown" id="icK-Fj-gih"/>
+                                                </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kvt-zJ-VEK">
                                                 <rect key="frame" x="228" y="0.0" width="114" height="30"/>
                                                 <state key="normal" title="Sign Up"/>
+                                                <connections>
+                                                    <action selector="onButtonPressSignUp" destination="BYZ-38-t0r" eventType="touchUpInside" id="Dtr-TJ-Vxm"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                     </stackView>
-                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="i7W-M4-EJH">
+                                    <textView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OhS-bf-Td0">
                                         <rect key="frame" x="0.0" y="200" width="342" height="400"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    </tableView>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                    </textView>
                                 </subviews>
                             </stackView>
                         </subviews>
@@ -188,6 +199,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="clearButton" destination="x1w-TV-o1T" id="nLe-dh-qP2"/>
                         <outlet property="emailAddressField" destination="LCt-Fd-EhP" id="zCx-hJ-HQ7"/>
                         <outlet property="emailConfirmation" destination="vGN-ye-yrN" id="Va6-Pu-aXR"/>
                         <outlet property="nameConfirmation" destination="1xx-tC-tUi" id="YXP-Dy-iTT"/>
@@ -196,8 +208,9 @@
                         <outlet property="passwordField" destination="FUP-zO-pJf" id="7Fr-eO-cO4"/>
                         <outlet property="phoneNumberConfirmation" destination="7Of-pp-ftP" id="rHg-8W-QLA"/>
                         <outlet property="phoneNumberField" destination="wyV-pZ-LcK" id="BtT-ph-qwx"/>
+                        <outlet property="restartButton" destination="TFU-Yy-p4D" id="3Xf-gi-SCV"/>
                         <outlet property="signUpButton" destination="kvt-zJ-VEK" id="6vt-f0-Mmg"/>
-                        <outlet property="signUpList" destination="i7W-M4-EJH" id="x5d-Wo-JBU"/>
+                        <outlet property="signUpList" destination="OhS-bf-Td0" id="xrj-d6-5EC"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

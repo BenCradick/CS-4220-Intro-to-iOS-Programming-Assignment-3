@@ -2,6 +2,8 @@ import UIKit
 
 class FormViewController: UIViewController, UITextFieldDelegate {
     
+    
+    
     @IBOutlet weak var nameField: UITextField!
     @IBOutlet weak var emailAddressField: UITextField!
     @IBOutlet weak var passwordField: UITextField!
@@ -11,7 +13,10 @@ class FormViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var passwordConfirmation: UIImageView!
     @IBOutlet weak var phoneNumberConfirmation: UIImageView!
     @IBOutlet weak var signUpButton: UIButton!
-    @IBOutlet weak var signUpList: UITableView!
+    @IBOutlet weak var clearButton: UIButton!
+    @IBOutlet weak var restartButton: UIButton!
+    @IBOutlet weak var signUpList: UITextView!
+    
     
     
     
@@ -30,12 +35,21 @@ class FormViewController: UIViewController, UITextFieldDelegate {
         phoneNumberField.delegate = self
         phoneNumberField.tag = 3
         
+        signUpButton.tag = -1
+        
+        
         signUpButton.isEnabled = false
+        signUpList.isScrollEnabled = false
+        signUpList.isEditable = true
+        
+        
+        
+        
     }
     
     
     let formModel = FormModel()
-    var nextField: UITextField?
+    
     @IBAction func onNameButtonPress(){
         print(#function)
         formModel.setValidName(name: nameField.text)
@@ -92,11 +106,28 @@ class FormViewController: UIViewController, UITextFieldDelegate {
             submit()
         }
     }
+    @IBAction func clear(){
+        print(#function)
+        wipeTextFields()
+        allImageToDefault()
+        resetModel()
 
+    }
+    @IBAction func onButtonPressSignUp(){
+        print(#function)
+        submit()
+    }
+
+    /*
+ 
+     MARK: - All Functions below this point are helper functions bc07-18-18
+ 
+    */
     
     func submit(){
         print(#function)
-    return
+        signUpList.insertText("\(nameField.text!)\n")
+        clear()
     }
     //Grabbed this from Stack Overflow
     func textFieldShouldReturn(_ textField: UITextField) -> Bool
@@ -104,23 +135,27 @@ class FormViewController: UIViewController, UITextFieldDelegate {
         // Try to find next responder
         if let nextField = textField.superview?.viewWithTag(textField.tag + 1) as? UITextField {
             nextField.becomeFirstResponder()
-        } else {
+            return true
+        } else if(!formModel.readyForSubmit()){
             // Not found, so remove keyboard.
+            //but don't force above return statements to trigger submit function, this is spaghetti code,
+            //I should apply at Riot
             textField.resignFirstResponder()
             return true
         }
+        else{
+            return false
+        }
         // Do not add a line break
-        return false
-    
-        
-        
-        
+       
     }
     
     
     
     func changeConfirmationImage(image: UIImageView, validityFunc: Bool, tag: UITextField){
         print(#function)
+        print(validityFunc)
+        print(formModel.readyForSubmit())
         if(validityFunc){
             image.image = #imageLiteral(resourceName: "green-check")
             signUpButton.isEnabled = formModel.readyForSubmit()
@@ -132,6 +167,7 @@ class FormViewController: UIViewController, UITextFieldDelegate {
         }
         
     }
+    
     func allImageToDefault(){
         print(#function)
         nameConfirmation.image = #imageLiteral(resourceName: "check")//there's a check here if you can't see it because of black background
@@ -157,6 +193,16 @@ class FormViewController: UIViewController, UITextFieldDelegate {
             return phoneNumberField
         }
         return nil
+    }
+    func wipeTextFields(){
+        nameField.text = ""
+        emailAddressField.text = ""
+        passwordField.text = ""
+        phoneNumberField.text = ""
+    }
+    func resetModel(){
+        formModel.reset()
+        
     }
 }
 

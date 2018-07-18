@@ -69,7 +69,19 @@ class FormModel {
     }
     public func readyForSubmit()->Bool{
         print(#function)
-        return (validName && validEmail && validPassword && validPhoneNumber)
+        guard validName else{
+            return false
+        }
+        guard validEmail else{
+            return false
+        }
+        guard validPassword else{
+            return false
+        }
+        guard validPhoneNumber else{
+            return false
+        }
+        return true
     }
     public func setValidName(name: String?){
         print(#function)
@@ -88,7 +100,12 @@ class FormModel {
         print(#function)
         validPhoneNumber = checkPhoneNumber(number: number)
     }
-    
+    public func reset(){
+        validName = false
+        validEmail = false
+        validPassword = false
+        validPhoneNumber = false
+    }
     
     
 }
