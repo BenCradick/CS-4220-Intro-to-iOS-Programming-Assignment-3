@@ -17,7 +17,7 @@
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC" customClass="UIScrollView">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -79,8 +79,11 @@
                                                         <nil key="textColor"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                         <textInputTraits key="textInputTraits"/>
+                                                        <connections>
+                                                            <action selector="onNameButtonPress" destination="BYZ-38-t0r" eventType="editingDidEnd" id="FI4-kE-vyz"/>
+                                                        </connections>
                                                     </textField>
-                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Your Email Address" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="LCt-Fd-EhP">
+                                                    <textField opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Your Email Address" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="LCt-Fd-EhP">
                                                         <rect key="frame" x="0.0" y="45" width="188.5" height="35"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="35" id="WRq-Kf-qAp"/>
@@ -88,8 +91,12 @@
                                                         <nil key="textColor"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                         <textInputTraits key="textInputTraits"/>
+                                                        <connections>
+                                                            <action selector="onEmailAddressButtonPress" destination="BYZ-38-t0r" eventType="valueChanged" id="c30-ii-tVG"/>
+                                                            <action selector="onEmailAddressButtonPress" destination="BYZ-38-t0r" eventType="editingDidEnd" id="kJi-1u-iQV"/>
+                                                        </connections>
                                                     </textField>
-                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Your Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="FUP-zO-pJf">
+                                                    <textField opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Your Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="FUP-zO-pJf">
                                                         <rect key="frame" x="0.0" y="90" width="188.5" height="35"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="35" id="jPC-lj-hsm"/>
@@ -97,8 +104,11 @@
                                                         <nil key="textColor"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                         <textInputTraits key="textInputTraits"/>
+                                                        <connections>
+                                                            <action selector="onPasswordButtonPress" destination="BYZ-38-t0r" eventType="editingDidEnd" id="1yL-3Q-Udl"/>
+                                                        </connections>
                                                     </textField>
-                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Your Phone Number" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="wyV-pZ-LcK">
+                                                    <textField opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Your Phone Number" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="wyV-pZ-LcK">
                                                         <rect key="frame" x="0.0" y="135" width="188.5" height="35"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="35" id="6t8-5b-7At"/>
@@ -106,6 +116,9 @@
                                                         <nil key="textColor"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                         <textInputTraits key="textInputTraits"/>
+                                                        <connections>
+                                                            <action selector="onPhoneNumberButtonPress" destination="BYZ-38-t0r" eventType="editingDidEnd" id="HhW-wn-ThH"/>
+                                                        </connections>
                                                     </textField>
                                                 </subviews>
                                             </stackView>
@@ -183,6 +196,8 @@
                         <outlet property="passwordField" destination="FUP-zO-pJf" id="7Fr-eO-cO4"/>
                         <outlet property="phoneNumberConfirmation" destination="7Of-pp-ftP" id="rHg-8W-QLA"/>
                         <outlet property="phoneNumberField" destination="wyV-pZ-LcK" id="BtT-ph-qwx"/>
+                        <outlet property="signUpButton" destination="kvt-zJ-VEK" id="6vt-f0-Mmg"/>
+                        <outlet property="signUpList" destination="i7W-M4-EJH" id="x5d-Wo-JBU"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

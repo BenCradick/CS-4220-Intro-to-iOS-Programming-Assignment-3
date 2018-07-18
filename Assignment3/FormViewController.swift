@@ -1,10 +1,7 @@
 import UIKit
 
-class FormViewController: UIViewController {
+class FormViewController: UIViewController, UITextFieldDelegate {
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
     @IBOutlet weak var nameField: UITextField!
     @IBOutlet weak var emailAddressField: UITextField!
     @IBOutlet weak var passwordField: UITextField!
@@ -13,6 +10,154 @@ class FormViewController: UIViewController {
     @IBOutlet weak var emailConfirmation: UIImageView!
     @IBOutlet weak var passwordConfirmation: UIImageView!
     @IBOutlet weak var phoneNumberConfirmation: UIImageView!
+    @IBOutlet weak var signUpButton: UIButton!
+    @IBOutlet weak var signUpList: UITableView!
+    
+    
+    
+    override func viewDidLoad() {
+        print(#function)
+        super.viewDidLoad()
+        nameField.delegate = self
+        nameField.tag = 0
+        
+        emailAddressField.delegate = self
+        emailAddressField.tag = 1
+        
+        passwordField.delegate = self
+        passwordField.tag = 2
+        
+        phoneNumberField.delegate = self
+        phoneNumberField.tag = 3
+        
+        signUpButton.isEnabled = false
+    }
+    
+    
+    let formModel = FormModel()
+    var nextField: UITextField?
+    @IBAction func onNameButtonPress(){
+        print(#function)
+        formModel.setValidName(name: nameField.text)
+        changeConfirmationImage(image: nameConfirmation, validityFunc: formModel.getValidName(), tag: nameField)
+        if(textFieldShouldReturn(nameField)){
+            print("valid name:\(formModel.getValidName()) ")
+            
+        }
+        else{
+            print("valid name:\(formModel.getValidName()) ")
+            submit()
+        }
+    }
+    @IBAction func onEmailAddressButtonPress(){
+        print(#function)
+        print("valid email:\(formModel.getValidEmail()) ")
+        formModel.setValidEmail(email: emailAddressField.text)
+        changeConfirmationImage(image: emailConfirmation, validityFunc: formModel.getValidEmail(), tag: emailAddressField)
+        if(textFieldShouldReturn(emailAddressField)){
+            
+            
+            print("valid email: \(formModel.getValidEmail())")
+            //runNextTextField(tag: getNextFieldTag())
+        }
+        else{
+            submit()
+        }
+
+        
+    }
+    @IBAction func onPasswordButtonPress(){
+        print(#function)
+        formModel.setValidPassword(pass: passwordField.text)
+        changeConfirmationImage(image: passwordConfirmation, validityFunc: formModel.getValidPassword(), tag: passwordField)
+        if(textFieldShouldReturn(passwordField)){
+            
+            print("valid password\(formModel.getValidPassword())")
+        }
+        else{
+            submit()
+        }
+    }
+
+    @IBAction func onPhoneNumberButtonPress(){
+        formModel.setValidPhoneNumber(number: phoneNumberField.text)
+        changeConfirmationImage(image: phoneNumberConfirmation, validityFunc: formModel.getValidPhoneNumber(), tag: phoneNumberField)
+        
+        print(#function)
+        if(textFieldShouldReturn(phoneNumberField)){
+           
+            print("valid PhoneNumber: \(formModel.getValidPhoneNumber())")
+        }
+        else{
+            submit()
+        }
+    }
+
+    
+    func submit(){
+        print(#function)
+    return
+    }
+    //Grabbed this from Stack Overflow
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool
+    {
+        // Try to find next responder
+        if let nextField = textField.superview?.viewWithTag(textField.tag + 1) as? UITextField {
+            nextField.becomeFirstResponder()
+        } else {
+            // Not found, so remove keyboard.
+            textField.resignFirstResponder()
+            return true
+        }
+        // Do not add a line break
+        return false
+    
+        
+        
+        
+    }
+    
+    
+    
+    func changeConfirmationImage(image: UIImageView, validityFunc: Bool, tag: UITextField){
+        print(#function)
+        if(validityFunc){
+            image.image = #imageLiteral(resourceName: "green-check")
+            signUpButton.isEnabled = formModel.readyForSubmit()
+        }
+        else{
+            image.image = #imageLiteral(resourceName: "x-mark-3-64")
+            signUpButton.isEnabled = formModel.readyForSubmit()
+            
+        }
+        
+    }
+    func allImageToDefault(){
+        print(#function)
+        nameConfirmation.image = #imageLiteral(resourceName: "check")//there's a check here if you can't see it because of black background
+        passwordConfirmation.image = #imageLiteral(resourceName: "check")//ditto
+        emailConfirmation.image = #imageLiteral(resourceName: "check")// take a guess
+        phoneNumberConfirmation.image = #imageLiteral(resourceName: "check")//same
+        
+    }
+    func getNextFieldTag()->UITextField?{
+        print(#function)
+        if(formModel.getValidName() == false){
+            return nameField
+        }
+        if(formModel.getValidEmail() == false){
+            print(#function)
+            print("Returning \(emailAddressField.tag)")
+            return emailAddressField
+        }
+        guard formModel.getValidPassword() else {
+            return passwordField
+        }
+        guard formModel.getValidPhoneNumber() else {
+            return phoneNumberField
+        }
+        return nil
+    }
 }
 
 
