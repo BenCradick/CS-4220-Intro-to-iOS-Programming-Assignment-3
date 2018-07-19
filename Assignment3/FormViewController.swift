@@ -1,3 +1,9 @@
+/*
+ Ben Cradick
+ 07-18-18
+ Assignment 3
+ The year is 20xx and this code qualifies as a crime against humanity.
+ */
 import UIKit
 
 class FormViewController: UIViewController, UITextFieldDelegate {

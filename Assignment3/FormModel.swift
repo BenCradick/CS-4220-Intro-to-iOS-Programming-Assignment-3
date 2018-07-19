@@ -1,3 +1,10 @@
+/*
+ Ben Cradick
+ 07-18-18
+ Assignment 3
+ Hold onto your pants because this code belongs served with red sauce and meat balls
+ */
+
 import Foundation
 
 class FormModel {
@@ -38,7 +45,7 @@ class FormModel {
     private func checkPhoneNumber(number: String?)-> Bool{
         print(#function)
         let num = number ?? ""
-        let phoneRegEx = "^\\d{10}$"
+        let phoneRegEx = "^\\d{10,}$"
         let phoneNumberTest = NSPredicate(format: "SELF MATCHES %@", phoneRegEx)
         return phoneNumberTest.evaluate(with: num)
     }
