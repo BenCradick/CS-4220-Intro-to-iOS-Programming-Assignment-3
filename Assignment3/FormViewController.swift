@@ -23,28 +23,30 @@ class FormViewController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         print(#function)
         super.viewDidLoad()
+        //creates a new gesture that is broadly defined target is self and #selector tells the objective C code what to look for in my swift code
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        view.addGestureRecognizer(tap)
         nameField.delegate = self
         nameField.tag = 0
         
         emailAddressField.delegate = self
+        emailAddressField.keyboardType = UIKeyboardType.emailAddress
         emailAddressField.tag = 1
         
         passwordField.delegate = self
+        passwordField.isSecureTextEntry = true
         passwordField.tag = 2
         
         phoneNumberField.delegate = self
+        phoneNumberField.keyboardType = UIKeyboardType.phonePad
         phoneNumberField.tag = 3
-        
+        //weird tags abound becasue I thought it might be causeing an issue with the keyboard jumping
         signUpButton.tag = -1
         
         
         signUpButton.isEnabled = false
         signUpList.isScrollEnabled = false
         signUpList.isEditable = true
-        
-        
-        
-        
     }
     
     
@@ -58,10 +60,6 @@ class FormViewController: UIViewController, UITextFieldDelegate {
             print("valid name:\(formModel.getValidName()) ")
             
         }
-        else{
-            print("valid name:\(formModel.getValidName()) ")
-            submit()
-        }
     }
     @IBAction func onEmailAddressButtonPress(){
         print(#function)
@@ -74,9 +72,6 @@ class FormViewController: UIViewController, UITextFieldDelegate {
             print("valid email: \(formModel.getValidEmail())")
             //runNextTextField(tag: getNextFieldTag())
         }
-        else{
-            submit()
-        }
 
         
     }
@@ -87,9 +82,6 @@ class FormViewController: UIViewController, UITextFieldDelegate {
         if(textFieldShouldReturn(passwordField)){
             
             print("valid password\(formModel.getValidPassword())")
-        }
-        else{
-            submit()
         }
     }
 
@@ -102,20 +94,22 @@ class FormViewController: UIViewController, UITextFieldDelegate {
            
             print("valid PhoneNumber: \(formModel.getValidPhoneNumber())")
         }
-        else{
-            submit()
-        }
     }
     @IBAction func clear(){
         print(#function)
+        dismissKeyboard()
         wipeTextFields()
         allImageToDefault()
         resetModel()
-
     }
     @IBAction func onButtonPressSignUp(){
         print(#function)
         submit()
+    }
+    @IBAction func onRestartButtonPress(){
+        print(#function)
+        clear()
+        signUpList.text = ""
     }
 
     /*
@@ -204,6 +198,16 @@ class FormViewController: UIViewController, UITextFieldDelegate {
         formModel.reset()
         
     }
+    //@objc exposes the function to the underlying objective C APIs
+   @objc func dismissKeyboard(){
+    // less brute force way of doing this was
+    //just n tab tab tab enter e tab tab tab enter.. etc
+    nameField.resignFirstResponder()
+    emailAddressField.resignFirstResponder()
+    passwordField.resignFirstResponder()
+    phoneNumberField.resignFirstResponder()
+    }
+    
 }
 
 

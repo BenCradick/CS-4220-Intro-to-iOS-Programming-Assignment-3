@@ -44,11 +44,10 @@ class FormModel {
     }
     private func checkName(name: String?)->Bool{
         print(#function)
-        if name == nil {
-            return false
-        }else{
-            return true
-        }
+        let name = name ?? ""
+        let nameRegEx = "^.{3,}"
+        let nameTest = NSPredicate(format: "SELF MATCHES %@", nameRegEx)
+        return nameTest.evaluate(with: name)
     }
     //perhaps should have been done with an enumeration
     public func getValidName()->Bool{
